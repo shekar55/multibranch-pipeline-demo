@@ -3,7 +3,7 @@ pipeline {
     agent any 
     
      triggers {
-      cron('34 13 * * *')
+      cron('40 13 * * *')
     }
 
     options {
@@ -28,7 +28,7 @@ pipeline {
             steps {
                 checkout([
                     $class: 'GitSCM', 
-                    branches: [[name: '*/main']], 
+                    branches: [[name: '*/develop']], 
                     userRemoteConfigs: [[url: 'https://github.com/spring-projects/spring-petclinic.git']]
                 ])
             }
