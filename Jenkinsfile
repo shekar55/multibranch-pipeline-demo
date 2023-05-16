@@ -3,7 +3,7 @@ pipeline {
     agent any 
     
      triggers {
-      cron('47 13 * * *')
+      cron('57 13 * * *')
     }
 
     options {
@@ -24,16 +24,26 @@ pipeline {
             }
         }
 
-        stage('Code Checkout') {
+     
+        stage('Build') {
             steps {
-                checkout([
-                    $class: 'GitSCM', 
-                    branches: [[name: '*/develop']], 
-                    userRemoteConfigs: [[url: 'https://github.com/spring-projects/spring-petclinic.git']]
-                ])
+                script {
+                    // Get the branch name from the parameter or environment variable
+                    def branchName = params.BRANCH_TO_BUILD ?: env.BRANCH_NAME
+                    
+                    // Clone the repository and checkout the specific branch
+                    checkout([$class: 'GitSCM',
+                        branches: [[name: "*/${branchName}"]],
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [[$class: 'LocalBranch', localBranch: "${branchName}"]],
+                        submoduleCfg: [],
+                        userRemoteConfigs: [[url: 'https://github.com/spring-projects/spring-petclinic.git']]
+                    ])
+
+                    // Add your build steps here
+                }
             }
         }
-
         stage(' Unit Testing') {
             steps {
                 sh """
