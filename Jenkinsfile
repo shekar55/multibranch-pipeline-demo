@@ -1,9 +1,9 @@
 pipeline {
 
-    agent {
-        node {
-            label 'master'
-        }
+    agent any 
+    
+     triggers {
+      cron('17 13 * * *')
     }
 
     options {
