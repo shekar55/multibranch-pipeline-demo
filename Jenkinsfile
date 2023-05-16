@@ -3,7 +3,7 @@ pipeline {
     agent any 
   
     triggers {
-        cron('12 59 * * *')
+        cron('0 13 * * *')
     }
 
     options {
