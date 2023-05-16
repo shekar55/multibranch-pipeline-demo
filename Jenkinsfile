@@ -5,6 +5,9 @@ pipeline {
             label 'master'
         }
     }
+    triggers {
+        cron('5 18 * * *')
+    }
 
     options {
         buildDiscarder logRotator( 
